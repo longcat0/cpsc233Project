@@ -7,5 +7,6 @@ class Hello {
    Scanner reader = new Scanner(System.in);
    String name = reader.nextLine();
    System.out.println("Hello " + name);
+   System.out.println("YEettt");
  }
 }
