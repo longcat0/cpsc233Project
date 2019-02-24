@@ -13,11 +13,16 @@ class Expense extends Budget {
 
   }
 
-
+  /**
+   * Makes lines in command prompt window.
+   */
   private static void makeLines() {
     System.out.println("----------------");
   }
 
+  /**
+   * Will print out all the expenses that the user can access.
+   */
   private static void printExpenses() {
     makeLines();
     System.out.println("1 - Rent");
@@ -53,11 +58,12 @@ class Expense extends Budget {
     // Sets the status to true if the input is yes. Otherwise, it will set status to false.
     Boolean status = (input.equalsIgnoreCase("Y")) ? true : false;
 
-    Boolean status2 = false;
+    Boolean status2 = false; // Status2 is used at the end of the while loop, where the user is asked if they want to continue using the expenses.
 
     while (status) {
       status2 = false;
       printExpenses();
+      // Printing out the total amount of your expenses.
       System.out.println("Total rent: " + this.getRent());
       System.out.println("Total food: " + this.getFood());
       System.out.println("Total entertainment: " + this.getEntertainment());
@@ -67,7 +73,7 @@ class Expense extends Budget {
       System.out.println("Total extras: " + this.getExtras());
       makeLines();
       System.out.println();
-      System.out.print("To which category would you like to input your expense to: ");
+      System.out.print("To which category would you like to input your expense to: "); // Asks the user for an expense to put money into.
       String command = reader.nextLine();
 
       // Swtich statement will check if command matches any of the Expenses listed
@@ -78,6 +84,10 @@ class Expense extends Budget {
           int count2 = 0;
           double amount = 0;
 
+          /*
+          With the do while loop, we want to keep asking the user for a input until we get one of type double.
+          If the user were to put in anything other than that (Like a String, for example), we will ask the user to try again.
+           */
           do {
             try { // Will go through the following block of code to see if there is an excpetion (error). If there is, the code from the catch block will run.
               System.out.println();
@@ -246,9 +256,5 @@ class Expense extends Budget {
 
  }
 }
-  public static void main(String[] args) {
-    Expense one = new Expense();
-    one.runExpense();
 
-  }
 }
