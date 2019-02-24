@@ -2,7 +2,7 @@ import java.text.DecimalFormat;
 import java.util.Scanner; 
  
 
-public class BudgetAnalysis { 
+public class Budget{ 
  
  public static void main(String[] args) { 
  
