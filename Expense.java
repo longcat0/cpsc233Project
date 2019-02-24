@@ -33,7 +33,7 @@ class Expense extends Budget {
 
   /**
    * This method runs the entire expense program. Note: It is important that you create
-   * an object of the Expense class before you run this program.
+   * an object of the Expense class before you run this program (it is an instance method).
    */
   public void runExpense() {
     Scanner reader = new Scanner(System.in);
