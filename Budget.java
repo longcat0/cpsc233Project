@@ -2,7 +2,7 @@ import java.text.DecimalFormat;
 import java.util.Scanner; 
  
 
-public class Budget{ 
+public class Budget { 
  
  public static void main(String[] args) { 
  
@@ -16,46 +16,58 @@ public class Budget{
   // Get the budget amount. 
   System.out.print("Enter your budget for Insurance: "); 
   double InsuranceBudget = keyboard.nextDouble();
+  totalIncome -= InsuranceBudget;
   if (totalIncome - InsuranceBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += InsuranceBudget;
   System.out.print("Enter your budget for Rent: "); 
   double RentBudget = keyboard.nextDouble(); 
+  totalIncome -= RentBudget;
   if (totalIncome - RentBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += RentBudget;
   System.out.print("Enter your budget for Clothing: "); 
   double ClothingBudget = keyboard.nextDouble();
+  totalIncome -= ClothingBudget;
   if (totalIncome - ClothingBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += ClothingBudget;
   System.out.print("Enter your budget for Food: "); 
   double FoodBudget = keyboard.nextDouble();
+  totalIncome -= FoodBudget;
   if (totalIncome - FoodBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += FoodBudget;
   System.out.print("Enter your budget for Bills: "); 
   double BillsBudget = keyboard.nextDouble();
+  totalIncome -= BillsBudget;
   if (totalIncome - BillsBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += BillsBudget;
   System.out.print("Enter your budget for Entertainment: "); 
   double EntertainmentBudget = keyboard.nextDouble();
+  totalIncome -= EntertainmentBudget;
   if (totalIncome - EntertainmentBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += EntertainmentBudget;
   System.out.print("Enter your budget for Extras: "); 
   double ExtrasBudget = keyboard.nextDouble();
+  totalIncome -= ExtrasBudget;
   if (totalIncome - ExtrasBudget <0){
 	  System.out.println("Warning! Your Budget is over your Income");
   }
   totalBudget += ExtrasBudget;
+  
+  if (totalIncome > 0 ){
+	  System.out.println("Left of your Income will automatically go to saving.");
+	  System.out.println("Your saving: " + totalIncome);
+  }
   // Get each expense, keep track of total. 
   double expense;  
   double totalExpenses = 0.0; 
