@@ -7,7 +7,8 @@ public class Income{
 	double extrasales;
 	double salarytwo;
 	double extrasalestwo;
-	
+	double salaryFinal;
+
 
 	//constructors
 	public Income(){
@@ -44,7 +45,7 @@ public Income(double salary, double extrasales, double salarytwo, double extrasa
 		}
 		return salarytwo;
 	}
-	
+
 	public double getExtrasales(){
 		return extrasales;
 	}
@@ -82,12 +83,12 @@ public void incomeTaxCalculator()
 			System.out.println(adder);
 			adder = FirstTax;
 			System.out.println(adder);
-			
-		
+
+
 			//System.out.println("this is first adder: " + adder);
 			// the line above is used for testing.
 		}
-		
+
 		else if(  ( fullamount > (47630/12) ) &&  ( fullamount <= (95259/12) )  )
 		{
 			double FirstTax = (47630/12) * (0.15);
@@ -98,7 +99,7 @@ public void incomeTaxCalculator()
 			adder = FirstTax + SecondTax;
 			//System.out.println("this is second adder: " + adder);
 		}
-		
+
 		else if(  ( fullamount > (95259/12) ) &&  ( fullamount <= (147667/12) )  )
 		{
 			double FirstTax = (47630/12) * (0.15);
@@ -109,7 +110,7 @@ public void incomeTaxCalculator()
 			adder = FirstTax + SecondTax + ThirdTax;
 			//System.out.println("this is third adder: " + adder);
 		}
-		
+
 		else if(  ( fullamount > (147667/12) ) &&  ( fullamount <= (210371/12) )  )
 		{
 			double FirstTax = (47630/12) * (0.15);
@@ -120,7 +121,7 @@ public void incomeTaxCalculator()
 			adder = FirstTax + SecondTax + ThirdTax + FourthTax;
 			//System.out.println("this is 4th adder: " + adder);
 		}
-		
+
 		else if(  ( fullamount > (210371/12) ) )
 		{
 			double FirstTax = (47630/12) * (0.15);
@@ -130,12 +131,13 @@ public void incomeTaxCalculator()
 			double FifthTax = ( fullamount - (210371/12) ) * (0.33);
 			adder = FirstTax + SecondTax + ThirdTax + ForthTax + FifthTax;
 			//System.out.println("this is 5th adder: " + adder);
-		}	
-		
+		}
+
 		double salaryFinal = (fullamount - adder);
-		System.out.println("Your salary after Income Tax is: " + salaryFinal + ".");
-		
-	}	
+		this.salaryFinal = Math.round(salaryFinal * 100.0) / 100.0;
+		System.out.println("Your salary after Income Tax is: " + Math.round(salaryFinal * 100.0) / 100.0 + ".");
+
+	}
 
 
 
