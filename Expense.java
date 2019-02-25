@@ -1,7 +1,7 @@
 import java.util.*;
 
-class Expense extends Budget {
-  Budget someBudget;
+class Expense extends Budget1 {
+  Budget1 someBudget;
   /**
    * Constructor for Expense class. The creation of an Expense object
    * will call the the default constructor of Budget class.
@@ -9,7 +9,11 @@ class Expense extends Budget {
    * Use the accessor methods from the Budget class in order to access the instance variables
    * of an Expense object.
    */
-  public Expense () {
+  public Expense(Budget1 aBudget) {
+    this.someBudget = aBudget;
+  }
+
+  public Expense() {
 
   }
 
@@ -64,13 +68,13 @@ class Expense extends Budget {
       status2 = false;
       printExpenses();
       // Printing out the total amount of your expenses.
-      System.out.println("Total rent: " + this.getRent());
-      System.out.println("Total food: " + this.getFood());
-      System.out.println("Total entertainment: " + this.getEntertainment());
-      System.out.println("Total bills: " + this.getBills());
-      System.out.println("Total clothing: " + this.getClothing());
-      System.out.println("Total insurance: " + this.getInsurance());
-      System.out.println("Total extras: " + this.getExtras());
+      System.out.println("Total rent: " + this.getRent() + " / " + someBudget.getRent());
+      System.out.println("Total food: " + this.getFood() + " / " + someBudget.getFood());
+      System.out.println("Total entertainment: " + this.getEntertainment() + " / " + someBudget.getEntertainment());
+      System.out.println("Total bills: " + this.getBills() + " / " + someBudget.getBills());
+      System.out.println("Total clothing: " + this.getClothing() + " / " + someBudget.getClothing());
+      System.out.println("Total insurance: " + this.getInsurance() + " / " + someBudget.getInsurance());
+      System.out.println("Total extras: " + this.getExtras() + " / " + someBudget.getExtras());
       makeLines();
       System.out.println();
       System.out.print("To which category would you like to input your expense to: "); // Asks the user for an expense to put money into.
@@ -99,10 +103,33 @@ class Expense extends Budget {
             }
 
           } while (count2 == 0);
-          this.setRent(amount);
-          System.out.println();
-          System.out.println("The total amount you've spent on rent: " + this.getRent());
-          status2 = true;
+          if ((someBudget.getRent() - amount) < 0) {
+            System.out.println("This value exceeds your budget for rent. Would you like to go over the budget?");
+            int temp = 0;
+
+
+            do {
+              System.out.print("Enter Y (Yes) or N (No): ");
+              String answer = reader.nextLine();
+              if (answer.equalsIgnoreCase("Y")) {
+                this.setRent(amount);
+                System.out.println();
+                System.out.println("The total amount you've spent on rent: " + this.getRent());
+                status2 = true;
+                temp = 1;
+              } else if (answer.equalsIgnoreCase("N")) {
+                temp = 1;
+              } else {
+                System.out.println("Invalid input. Please try again.");
+              }
+            } while (temp == 0);
+          } else {
+            this.setRent(amount);
+            System.out.println();
+            System.out.println("The total amount you've spent on rent: " + this.getRent());
+            status2 = true;
+          }
+
           break;
 
        // Food
@@ -121,10 +148,32 @@ class Expense extends Budget {
 
 
          } while (count3 == 0);
-         this.setFood(amount2);
-         System.out.println();
-         System.out.println("The total amount you've spent on food: " + this.getFood());
-         status2 = true;
+         if ((someBudget.getFood() - amount2) < 0) {
+           System.out.println("This value exceeds your budget for food. Would you like to go over the budget?");
+           int temp2 = 0;
+
+
+           do {
+             System.out.print("Enter Y (Yes) or N (No): ");
+             String answer = reader.nextLine();
+             if (answer.equalsIgnoreCase("Y")) {
+               this.setFood(amount2);
+               System.out.println();
+               System.out.println("The total amount you've spent on food: " + this.getFood());
+               status2 = true;
+               temp2 = 1;
+             } else if (answer.equalsIgnoreCase("N")) {
+               temp2 = 1;
+             } else {
+               System.out.println("Invalid input. Please try again.");
+             }
+           } while (temp2 == 0);
+         } else {
+           this.setFood(amount2);
+           System.out.println();
+           System.out.println("The total amount you've spent on food: " + this.getFood());
+           status2 = true;
+         }
          break;
 
       // Entertainment
@@ -143,10 +192,32 @@ class Expense extends Budget {
 
 
         } while (count4 == 0);
-        this.setEntertainment(amount3);
-        System.out.println();
-        System.out.println("The total amount you've spent on entertainment: " + this.getEntertainment());
-        status2 = true;
+        if ((someBudget.getEntertainment() - amount3) < 0) {
+          System.out.println("This value exceeds your budget for entertainment. Would you like to go over the budget?");
+          int temp3 = 0;
+
+
+          do {
+            System.out.print("Enter Y (Yes) or N (No): ");
+            String answer = reader.nextLine();
+            if (answer.equalsIgnoreCase("Y")) {
+              this.setEntertainment(amount3);
+              System.out.println();
+              System.out.println("The total amount you've spent on entertainment: " + this.getEntertainment());
+              status2 = true;
+              temp3 = 1;
+            } else if (answer.equalsIgnoreCase("N")) {
+              temp3 = 1;
+            } else {
+              System.out.println("Invalid input. Please try again.");
+            }
+          } while (temp3 == 0);
+        } else {
+          this.setEntertainment(amount3);
+          System.out.println();
+          System.out.println("The total amount you've spent on entertainment: " + this.getEntertainment());
+          status2 = true;
+        }
         break;
 
       // Bills
@@ -165,10 +236,31 @@ class Expense extends Budget {
 
 
         } while (count5 == 0);
-        this.setBills(amount4);
-        System.out.println();
-        System.out.println("The total amount you've spent on bills: " + this.getBills());
-        status2 = true;
+        if ((someBudget.getBills() - amount4) < 0) {
+          System.out.println("This value exceeds your budget for bills. Would you like to go over the budget?");
+          int temp4 = 0;
+
+
+          do {
+            System.out.print("Enter Y (Yes) or N (No): ");
+            String answer = reader.nextLine();
+            if (answer.equalsIgnoreCase("Y")) {
+              this.setBills(amount4);
+              System.out.println();
+              System.out.println("The total amount you've spent on bills: " + this.getBills());
+              status2 = true;
+              temp4 = 1;
+            } else if (answer.equalsIgnoreCase("N")) {
+              temp4 = 1;
+            } else {
+              System.out.println("Invalid input. Please try again.");
+            }
+          } while (temp4 == 0);
+        } else {
+          this.setBills(amount4);
+          System.out.println();
+          System.out.println("The total amount you've spent on bills: " + this.getBills());
+        }
         break;
 
 
@@ -188,10 +280,31 @@ class Expense extends Budget {
 
 
        } while (count6 == 0);
-       this.setClothing(amount5);
-       System.out.println();
-       System.out.println("The total amount you've spent on clothing: " + this.getClothing());
-       status2 = true;
+       if ((someBudget.getClothing() - amount5) < 0) {
+         System.out.println("This value exceeds your budget for clothing. Would you like to go over the budget?");
+         int temp5 = 0;
+
+
+         do {
+           System.out.print("Enter Y (Yes) or N (No): ");
+           String answer = reader.nextLine();
+           if (answer.equalsIgnoreCase("Y")) {
+             this.setClothing(amount5);
+             System.out.println();
+             System.out.println("The total amount you've spent on clothing: " + this.getClothing());
+             status2 = true;
+             temp5 = 1;
+           } else if (answer.equalsIgnoreCase("N")) {
+             temp5 = 1;
+           } else {
+             System.out.println("Invalid input. Please try again.");
+           }
+         } while (temp5 == 0);
+       } else {
+         this.setClothing(amount5);
+         System.out.println();
+         System.out.println("The total amount you've spent on clothing: " + this.getClothing());
+       }
        break;
 
      // Insurance
@@ -210,10 +323,31 @@ class Expense extends Budget {
 
 
         } while (count7 == 0);
-        this.setInsurance(amount6);
-        System.out.println();
-        System.out.println("The total amount you've spent on insurance: " + this.getInsurance());
-        status2 = true;
+        if ((someBudget.getInsurance() - amount6) < 0) {
+          System.out.println("This value exceeds your budget for insurance. Would you like to go over the budget?");
+          int temp6 = 0;
+
+
+          do {
+            System.out.print("Enter Y (Yes) or N (No): ");
+            String answer = reader.nextLine();
+            if (answer.equalsIgnoreCase("Y")) {
+              this.setInsurance(amount6);
+              System.out.println();
+              System.out.println("The total amount you've spent on insurance: " + this.getInsurance());
+              status2 = true;
+              temp6 = 1;
+            } else if (answer.equalsIgnoreCase("N")) {
+              temp6 = 1;
+            } else {
+              System.out.println("Invalid input. Please try again.");
+            }
+          } while (temp6 == 0);
+        } else {
+          this.setInsurance(amount6);
+          System.out.println();
+          System.out.println("The total amount you've spent on insurance: " + this.getInsurance());
+        }
         break;
 
     // Extras
@@ -232,10 +366,31 @@ class Expense extends Budget {
 
 
         } while (count8 == 0);
-        this.setExtras(amount7);
-        System.out.println();
-        System.out.println("The total amount you've spent on extras: " + this.getExtras());
-        status2 = true;
+        if ((someBudget.getExtras() - amount7) < 0) {
+          System.out.println("This value exceeds your budget for extras. Would you like to go over the budget?");
+          int temp7 = 0;
+
+
+          do {
+            System.out.print("Enter Y (Yes) or N (No): ");
+            String answer = reader.nextLine();
+            if (answer.equalsIgnoreCase("Y")) {
+              this.setExtras(amount7);
+              System.out.println();
+              System.out.println("The total amount you've spent on extras: " + this.getExtras());
+              status2 = true;
+              temp7 = 1;
+            } else if (answer.equalsIgnoreCase("N")) {
+              temp7 = 1;
+            } else {
+              System.out.println("Invalid input. Please try again.");
+            }
+          } while (temp7 == 0);
+        } else {
+          this.setExtras(amount7);
+          System.out.println();
+          System.out.println("The total amount you've spent on extras: " + this.getExtras());
+        }
         break;
 
     default:
@@ -251,10 +406,9 @@ class Expense extends Budget {
     // Will set the value of status to false if input2 is no.
     status = (input2.equalsIgnoreCase("N")) ? false : true;
 
+    }
+
+
   }
-
-
- }
-}
-
+  }
 }
