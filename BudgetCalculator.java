@@ -1,4 +1,4 @@
-
+// Code by Sharif Ehsani
 public class BudgetCalculator
 {
 	private double incomeOne, incomeTwo,incomeThree, incomeFour;
