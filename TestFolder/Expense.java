@@ -13,7 +13,7 @@ class Expense {
     String lines = ("-------------");
     return lines;
   }
-  public void putIntoArray(String name, double amount) {
+  public void putIntoExpense(String name, double amount) {
     Date date = new Date();
     String info = ( "\n" + makeLines() + "\nTime and Date: " + date.toString() + "\nBudget: " + name + "\n" + "Amount: " + amount);
     transactions.add(info);

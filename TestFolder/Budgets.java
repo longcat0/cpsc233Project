@@ -34,33 +34,23 @@ class Budgets {
 		this.amount += (amount > 0) ? amount : 0;
 	}
 
-	public static void createBudget(HashMap<String, Budgets> map, double totalIncome) {
-		Scanner reader = new Scanner(System.in);
-		double total = totalIncome;
-		for (Map.Entry<String, Budgets> entry : map.entrySet()) {
-			int temp = 0;
-			int temp2 = 0;
-			do {
-				System.out.println();
-				try {
-					do {
-						System.out.println("How much would you like to allocate towards " + entry.getKey() + "?");
-						double amount = Double.parseDouble(reader.nextLine());
-						if ((total - amount) >= 0) {
-							entry.getValue().setBudgAmount(amount);
-							total -= amount;
-							temp2 = 1;
-						} else {
-							System.out.println("You do not have enough funds to allocate. You would need " + Math.abs(total - amount) + " more.");
-						}
+	public void removeFromBudg(double amount) {
+		this.amount -= ((amount > 0) && ((this.amount - amount) > 0)) ? amount : 0;
+	}
 
-					} while (temp2 == 0);
-					temp = 1;
-				} catch (Exception e) {
-					System.out.println();
-	        System.out.println("Invalid input. Please try again.");
-				}
-			} while (temp == 0);
+	public static void printBudgetCommands() {
+		System.out.println();
+		System.out.println("1 - Remove from budget");
+		System.out.println("2 - Add to budget");
+		System.out.println("3 - Transfer between budgets");
+	}
+
+	public void transferToBudget(Budgets someBudget, double amount) {
+		if ((amount > 0) && ((this.amount - amount) > 0)) {
+			this.removeFromBudg(amount);
+			someBudget.addToBudg(amount);
+		} else {
+			System.out.println("Invalid transfer.");
 		}
 
 	}
