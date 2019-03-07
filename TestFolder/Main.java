@@ -73,6 +73,14 @@ class Main {
           userAccounts.get("Jerrod").userBudgets.get(budg1).transferToBudget(temp3, amount1);
           userAccounts.get("Jerrod").printUserBudgets();
           break;
+
+        case "12":
+          System.out.println("Which account would you like to access?");
+          String account1 = reader.nextLine();
+          System.out.println("What would you like to name your budget");
+          String budgetname = reader.nextLine();
+          userAccounts.get(account1).userBudgets.put(budgetname, new Budgets(budgetname));
+          break;
         default:
           System.out.println("Unknown command. Please try again.");
       }
