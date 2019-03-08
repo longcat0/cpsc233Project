@@ -33,5 +33,9 @@ class Income1 {
     } while (temp == 0);
 
   }
-
+  /*
+  public void getInt(TextField input, String message) {
+    System.out.println("Hello there mate");
+  }
+  */
 }

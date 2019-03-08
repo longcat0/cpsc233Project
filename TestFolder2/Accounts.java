@@ -16,6 +16,11 @@ class Accounts {
     userIncome.inputIncome();
   }
 
+  public Accounts(String name, double Income) {
+    this.name = name;
+    userIncome.setAmount(Income);
+  }
+
   public Accounts (Accounts copy) {
     this.name = copy.name;
     this.userIncome = copy.userIncome;
@@ -30,13 +35,17 @@ class Accounts {
     return userExpense;
   }
 
+  public Income1 getIncome() {
+    return userIncome;
+  }
+
   public String getName() {
     return this.name;
   }
 
-  public void createUserBudget() {
+  public void createUserBudget(Double someAmount) {
     Scanner reader = new Scanner(System.in);
-    double totalIncome = userIncome.getAmount();
+    double totalIncome = someAmount;
 
     for (int x = 0; x < initialBudgetNames().size(); x++) {
       userBudgets.put(initialBudgetNames().get(x), new Budgets(initialBudgetNames().get(x)));
@@ -156,13 +165,6 @@ class Accounts {
   }
 
 
-  public static void main(String[] args) {
-    Accounts user1 = new Accounts("Jonathan");
-    user1.createUserBudget();
-    user1.printUserBudgets();
 
-    Accounts user2 = new Accounts(user1);
-    user2.printUserBudgets();
 
-  }
 }

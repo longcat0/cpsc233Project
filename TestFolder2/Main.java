@@ -1,15 +1,116 @@
 import java.util.*;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 
-class Main {
-
-  public static void main(String[] args) {
-    Scanner reader = new Scanner(System.in);
+public class Main extends Application {
 
     HashMap<String, Accounts> userAccounts = new HashMap<String, Accounts>();
-    
+    Stage window;
+    Scene scene1, scene2, scene3;
+    ListView<String> listView;
+
+  public static void main(String[] args) {
+    launch(args);
   }
 
+  @Override
+  public void start(Stage primaryStage) throws Exception {
+    primaryStage.setTitle("Virtual Piggy Bank");
+    window = primaryStage;
 
+    GridPane layout1 = new GridPane();
+    layout1.setPadding(new Insets(10,10,10,10));
+    layout1.setVgap(8);
+    layout1.setHgap(10);
+
+
+    // Title at the top of the starting scene
+    Label titleLabel = new Label("Virtual Piggy Bank Applicaton");
+    titleLabel.setMinWidth(40);
+    titleLabel.setMinHeight(40);
+    GridPane.setConstraints(titleLabel, 2, 1);
+    // Income label
+    Label incomeLabel = new Label("Enter your income: ");
+    GridPane.setConstraints(incomeLabel,2,25);
+    TextField incomeInput = new TextField();
+    incomeInput.setPromptText("income");
+    GridPane.setConstraints(incomeInput, 3,25);
+
+    // Name Label
+    Label nameLabel = new Label("Name your account:");
+    TextField nameInput = new TextField("Untitled");;
+    GridPane.setConstraints(nameLabel, 2,20);
+    GridPane.setConstraints(nameInput,3,20);
+
+
+    // Budget allocation layout
+    GridPane layout2 = new GridPane();
+    layout2.setPadding(new Insets(10,10,10,10));
+    layout2.setVgap(8);
+    layout2.setHgap(10);
+
+    Button button2 = new Button("Enter");
+    GridPane.setConstraints(button2, 2, 35);
+
+    // Label that displays the amount that you can allocate towards your fund
+    Label availIncome = new Label("Your current available fund: ");
+    GridPane.setConstraints(availIncome, 2, 10);
+
+    Label budgetLabel = new Label("Enter an amount: ");
+    TextField budgetInput = new TextField();
+    GridPane.setConstraints(budgetLabel, 2, 30);
+    GridPane.setConstraints(budgetInput, 3, 30);
+
+    // Creating the list of budgets that you can select
+    listView = new ListView<>();
+    listView.getItems().addAll("Rent", "Food", "Bills", "Entertainment", "Clothing", "Insurance", "Extras");
+    GridPane.setConstraints(listView, 3, 20);
+
+    // Create account button
+    Button button1 = new Button("Create Account");
+    /*
+    When the button is clicked, it will take the information in the text field and create an Account object.
+    Once an Account object is created, it will be put inside of a HashMap which essentially stores all created accounts.
+     */
+    button1.setOnAction(e -> {
+      userAccounts.put(nameInput.getText(), new Accounts(nameInput.getText(), Double.parseDouble(incomeInput.getText())));
+      String accountName = nameInput.getText();
+      window.setScene(scene2);
+
+
+    });
+    GridPane.setConstraints(button1, 2, 30);
+    layout1.getChildren().addAll(titleLabel, incomeLabel, incomeInput, nameLabel, nameInput, button1);
+
+
+    layout2.getChildren().addAll(button2, budgetLabel, budgetInput, listView, availIncome);
+
+    scene1 = new Scene(layout1, 500, 500);
+    scene2 = new Scene(layout2, 500, 500);
+    window.setScene(scene1);
+
+    window.show();
+
+
+
+
+
+
+
+
+  }
+  /*
   public static Accounts createAccount() {
     Scanner reader = new Scanner(System.in);
     System.out.println();
@@ -20,10 +121,8 @@ class Main {
     return userAccount;
 
   }
+  */
 
-  public void viewTransactions() {
-
-  }
 
 
 
