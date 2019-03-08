@@ -12,6 +12,10 @@ class Income1 {
     return this.amount;
   }
 
+  public void removeAmount(double amount) {
+    this.amount -= amount;
+  }
+
   public void setAmount(double amount) {
     this.amount = (amount > 0) ? (amount) : 0;
   }
