@@ -3,33 +3,98 @@ import java.util.*;
 class Accounts {
   private String name = "Untitled";
   private Income1 userIncome = new Income1();
-  private HashMap<String, Budgets> userBudgets = new HashMap<String, Budgets>();
+  private Budgets Rent = new Budgets();
+  private Budgets Entertainment = new Budgets();
+  private Budgets Clothing  = new Budgets();
+  private Budgets Bills = new Budgets();
+  private Budgets Food = new Budgets();
+  private Budgets Insurance = new Budgets();
+  private Budgets Extras = new Budgets();
+  private Budgets UnallocatedFunds = new Budgets();
   private Expense userExpense = new Expense();
 
-  public Accounts(String name) {
-    this.name = name;
-    userIncome.inputIncome();
 
-  }
-
-  public Accounts() {
-    userIncome.inputIncome();
-  }
-
+  /**
+   * Constructor for the Accounts class
+   * @param name   Assigns it to the instance variable Name
+   * @param Income Will take the parameter and set the account's income
+   */
   public Accounts(String name, double Income) {
     this.name = name;
     userIncome.setAmount(Income);
+
   }
 
+  /**
+   * Returns the rent budget
+   * @return Rent
+   */
+  public Budgets getRent() {
+    return Rent;
+  }
+
+  /**
+   * Returns the entertainment budget
+   * @return Entertainment
+   */
+  public Budgets getEntertainment() {
+    return Entertainment;
+  }
+
+  /**
+   * Return the clothing budget
+   * @return Clothing
+   */
+  public Budgets getClothing() {
+    return Clothing;
+  }
+
+  /**
+   * Return the bills budget
+   * @return Bills
+   */
+  public Budgets getBills() {
+    return Bills;
+  }
+
+  /**
+   * Return the food budget
+   * @return Food
+   */
+  public Budgets getFood() {
+    return Food;
+  }
+
+  /**
+   * Return the insurance budget
+   * @return Insurance
+   */
+  public Budgets getInsurance() {
+    return Insurance;
+  }
+
+  /**
+   * Return extras budget
+   * @return Extras
+   */
+  public Budgets getExtras() {
+    return Extras;
+  }
+
+  /**
+   * Return unallocated funds
+   * @return UnallocatedFunds
+   */
+  public Budgets getUnallocatedFunds() {
+    return UnallocatedFunds;
+  }
+/*
   public Accounts (Accounts copy) {
     this.name = copy.name;
     this.userIncome = copy.userIncome;
     this.userBudgets = copy.userBudgets;
   }
-
-  public HashMap<String, Budgets> getUserBudgets() {
-    return userBudgets;
-  }
+*/
 
   public Expense getUserExpenses() {
     return userExpense;
@@ -43,125 +108,19 @@ class Accounts {
     return this.name;
   }
 
-  public void createUserBudget(Double someAmount) {
-    Scanner reader = new Scanner(System.in);
-    double totalIncome = someAmount;
-
-    for (int x = 0; x < initialBudgetNames().size(); x++) {
-      userBudgets.put(initialBudgetNames().get(x), new Budgets(initialBudgetNames().get(x)));
+  /**
+   * [checkBudg description]
+   * @param  name       [description]
+   * @param  amount     [description]
+   * @param  availFunds [description]
+   * @return            [description]
+   */
+  public boolean checkBudg(String name, double amount, double availFunds) {
+    if ((amount < 0) || ((availFunds - amount) < 0)) {
+      return false;
+    } else {
+      return true;
     }
-
-
-    for (Map.Entry<String, Budgets> entry : userBudgets.entrySet()) {
-      int temp = 0;
-      int temp2 = 0;
-      if (entry.getKey().equals("Unallocated Funds")) {
-        continue;
-      }
-      do {
-        System.out.println();
-        try {
-          do {
-            System.out.println("You have " + totalIncome + " left.");
-            System.out.print("How much would you like to allocate towards " + entry.getKey() + "? ");
-            double amount = Double.parseDouble(reader.nextLine());
-            if ((totalIncome - amount) >= 0) {
-              entry.getValue().addToBudg(amount);
-              totalIncome -= amount;
-              temp2 = 1;
-            } else {
-              System.out.println("You do not have enough funds to allocate. You would need " + Math.abs(totalIncome - amount) + " more.");
-            }
-
-          } while (temp2 == 0);
-          temp = 1;
-        } catch (Exception e) {
-          System.out.println();
-          System.out.println("Invalid input. Please try again.");
-        }
-      } while (temp == 0);
-    }
-
-    userBudgets.get("Unallocated Funds").setBudgAmount(totalIncome);
-  }
-
-  private static ArrayList<String> initialBudgetNames() {
-    ArrayList<String> temp = new ArrayList<String>();
-    temp.add("Rent");
-    temp.add("Food");
-    temp.add("Entertainment");
-    temp.add("Bills");
-    temp.add("Insurance");
-    temp.add("Extras");
-    temp.add("Clothing");
-    temp.add("Unallocated Funds");
-    return temp;
-
-  }
-
-  public void printUserBudgets() {
-    System.out.println();
-    System.out.println("Account name: " + this.name);
-    System.out.println("-----------------------------");
-    for (Map.Entry<String, Budgets> entry : userBudgets.entrySet()) {
-      System.out.println();
-      System.out.println(entry.getKey() + ": " + entry.getValue().getBudgAmount());
-
-    }
-  }
-
-  public void manageBudgets() {
-    Scanner reader = new Scanner(System.in);
-    this.printUserBudgets();
-    System.out.println("Which budget would you like to manage? ");
-    String input = reader.nextLine();
-
-    if (this.userBudgets.containsKey(input)) {
-      Budgets.printBudgetCommands();
-      System.out.println("What woud you like to do?");
-
-    }
-
-
-  }
-
-  public void addIncome() {
-    Scanner reader = new Scanner(System.in);
-    userIncome.inputIncome();
-    double totalIncome = userIncome.getAmount();
-    for (Map.Entry<String, Budgets> entry : userBudgets.entrySet()) {
-      int temp = 0;
-      int temp2 = 0;
-      if (entry.getKey().equals("Unallocated Funds")) {
-        continue;
-      }
-      do {
-        System.out.println();
-        try {
-          do {
-            System.out.println("You have " + totalIncome + " left.");
-            System.out.print("How much would you like to allocate towards " + entry.getKey() + "? ");
-            double amount = Double.parseDouble(reader.nextLine());
-            if ((totalIncome - amount) >= 0) {
-              entry.getValue().addToBudg(amount);
-              totalIncome -= amount;
-              temp2 = 1;
-            } else {
-              System.out.println("You do not have enough funds to allocate. You would need " + Math.abs(totalIncome - amount) + " more.");
-            }
-
-          } while (temp2 == 0);
-          temp = 1;
-        } catch (Exception e) {
-          System.out.println();
-          System.out.println("Invalid input. Please try again.");
-        }
-      } while (temp == 0);
-    }
-
-    userBudgets.get("Unallocated Funds").addToBudg(totalIncome);
-
-
   }
 
 
