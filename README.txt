@@ -5,7 +5,7 @@
 > Mustafa
 > Mihailo
 
-**Instructions** 
+**Usage** 
 1. In the command prompt, type 'git clone https://github.com/GomenNasai9/cpsc233Project.git' to clone the cpsc233Project repository.
 2. Change the directory using 'cd [folder name]'.
 3. Change the directory to the folder named 'Edited'.
