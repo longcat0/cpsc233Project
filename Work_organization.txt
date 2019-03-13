@@ -1,0 +1,12 @@
+Aditional income (If user wants to add additional income.) ~ Song
+Editing budgets (transfer from one budget to another or something like that) ~ Song
+
+Visuals (Formating it, making it look nice.) ~ Mustafa
+Memes ~ Mustafa
+Junit tests ~ Sharif/Mustafa
+
+Add expense ~ Aron 
+Recent transactions ~ Aron
+Text based ~ Aron
+
+Saving shit ~ Anyone that figures it out
