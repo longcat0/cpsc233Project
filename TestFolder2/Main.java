@@ -164,66 +164,6 @@ public class Main extends Application {
       window.setScene(scene1);
     });
 
-    /*
-    Screen that allows the user to switch accounts.
-     */
-
-    GridPane switchLayout = new GridPane();
-    switchLayout.setPadding(new Insets(20,20,20,20));
-    switchLayout.setVgap(8);
-    switchLayout.setHgap(10);
-
-    Text blank = new Text("--------------------------------");
-    blank.setFill(Color.WHITESMOKE);
-    GridPane.setConstraints(blank, 1, 25);
-
-    accountNames = new ListView<>();
-    GridPane.setConstraints(accountNames, 2, 20);
-
-    HBox switchButtons = new HBox();
-    switchButtons.setSpacing(20);
-    GridPane.setConstraints(switchButtons, 2, 25);
-
-    Button cancel = new Button("Cancel");
-    cancel.setOnAction(ab -> {
-      window.setScene(scene3);
-    });
-    Button switchAccounts = new Button("Switch");
-    switchAccounts.setOnAction(ty -> {
-      currentAccount = accountNames.getSelectionModel().getSelectedItem();
-      userName.setText("Current User: " + currentAccount);
-
-      rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
-      entertainmentBudg.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
-      clothingBudg.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
-      billsBudg.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
-      foodBudg.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
-      extrasBudg.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
-      insuranceBudg.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
-
-      window.setScene(scene3);
-    });
-
-    switchButtons.getChildren().addAll(cancel, switchAccounts);
-
-
-    HBox user = new HBox();
-    GridPane.setConstraints(user, 4, 25);
-    user.setSpacing(15);
-
-    Button switchButton = new Button("Switch User");
-    switchButton.setOnAction(r -> {
-      window.setScene(userSwitch);
-    });
-
-    user.getChildren().addAll(userName, switchButton);
-
-    menuButtons.getChildren().addAll(addIncome, showExpense, manageBudgets, createNewAccount);
-
-    Label menuText = new Label("Welcome to the Virtual Piggy Bank Applicaton!");
-    GridPane.setConstraints(menuText, 4, 20);
-
-
     // This layout displays options on how a user can manage their budgets.
     GridPane layout4 = new GridPane();
     HBox horizontalButtons = new HBox();
@@ -266,13 +206,84 @@ public class Main extends Application {
 
     Button transfer = new Button("Transfer Budgets");
 
-    horizontalButtons.getChildren().addAll(addToBudg, transfer);
+    Button addExpense = new Button("Add an Expense");
+
+    horizontalButtons.getChildren().addAll(addToBudg, transfer, addExpense);
+
 
 
     Text options = new Text("Budget Options");
     options.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
     options.setUnderline(true);
     GridPane.setConstraints(options, 4, 30);
+
+
+    /*
+    Screen that allows the user to switch accounts.
+     */
+
+    GridPane switchLayout = new GridPane();
+    switchLayout.setPadding(new Insets(20,20,20,20));
+    switchLayout.setVgap(8);
+    switchLayout.setHgap(10);
+
+    Text blank = new Text("--------------------------------");
+    blank.setFill(Color.WHITESMOKE);
+    GridPane.setConstraints(blank, 1, 25);
+
+    accountNames = new ListView<>();
+    GridPane.setConstraints(accountNames, 2, 20);
+
+    HBox switchButtons = new HBox();
+    switchButtons.setSpacing(20);
+    GridPane.setConstraints(switchButtons, 2, 25);
+
+    Button cancel = new Button("Cancel");
+    cancel.setOnAction(ab -> {
+      window.setScene(scene3);
+    });
+    Button switchAccounts = new Button("Switch");
+    switchAccounts.setOnAction(ty -> {
+      currentAccount = accountNames.getSelectionModel().getSelectedItem();
+      userName.setText("Current User: " + currentAccount);
+
+      rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+      entertainmentBudg.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+      clothingBudg.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+      billsBudg.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+      foodBudg.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+      extrasBudg.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+      insuranceBudg.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+
+      rentBudg1.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+      entertainmentBudg1.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+      clothingBudg1.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+      billsBudg1.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+      foodBudg1.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+      extrasBudg1.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+      insuranceBudg1.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+
+      window.setScene(scene3);
+    });
+
+    switchButtons.getChildren().addAll(cancel, switchAccounts);
+
+
+    HBox user = new HBox();
+    GridPane.setConstraints(user, 4, 25);
+    user.setSpacing(15);
+
+    Button switchButton = new Button("Switch User");
+    switchButton.setOnAction(r -> {
+      window.setScene(userSwitch);
+    });
+
+    user.getChildren().addAll(userName, switchButton);
+
+    menuButtons.getChildren().addAll(addIncome, showExpense, manageBudgets, createNewAccount);
+
+    Label menuText = new Label("Welcome to the Virtual Piggy Bank Applicaton!");
+    GridPane.setConstraints(menuText, 4, 20);
 
     /*
     This screen prompts the user to add any additional income to their account
@@ -298,6 +309,24 @@ public class Main extends Application {
       userAccounts.get(nameInput.getText()).getUnallocatedFunds().setBudgAmount(temp);
       currentAccount = nameInput.getText();
       userName.setText("Current User: " + currentAccount);
+
+      rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+      entertainmentBudg.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+      clothingBudg.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+      billsBudg.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+      foodBudg.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+      extrasBudg.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+      insuranceBudg.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+
+      rentBudg1.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+      entertainmentBudg1.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+      clothingBudg1.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+      billsBudg1.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+      foodBudg1.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+      extrasBudg1.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+      insuranceBudg1.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+
+
       window.setScene(scene3);
       for(String names : userAccounts.keySet()) {
         System.out.println(names);
@@ -324,45 +353,53 @@ public class Main extends Application {
           userAccounts.get(currentAccount).getRent().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+          rentBudg1.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
         }
 
         if (selection.equals("Entertainment")) {
           userAccounts.get(currentAccount).getEntertainment().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           entertainmentBudg.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+          entertainmentBudg1.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
         }
+
 
         if (selection.equals("Clothing")) {
           userAccounts.get(currentAccount).getClothing().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           clothingBudg.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+          clothingBudg1.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
         }
+
 
         if (selection.equals("Bills")) {
           userAccounts.get(currentAccount).getBills().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           billsBudg.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+          billsBudg1.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
         }
 
         if (selection.equals("Food")) {
           userAccounts.get(currentAccount).getFood().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           foodBudg.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+          foodBudg1.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
         }
 
         if (selection.equals("Extras")) {
           userAccounts.get(currentAccount).getExtras().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           extrasBudg.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+          extrasBudg1.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
         }
 
         if (selection.equals("Insurance")) {
           userAccounts.get(currentAccount).getInsurance().addToBudg(allocationAmount);
           userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
           insuranceBudg.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+          insuranceBudg1.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+
         }
-
-
         availIncome.setText("Your current available funds: " + Math.round(userAccounts.get(currentAccount).getIncome().getAmount() * 100) / 100.0);
 
 
