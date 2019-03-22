@@ -2,6 +2,7 @@ import java.util.*;
 
 class Accounts {
   private String name = "Untitled";
+  private String password;
   private Income1 userIncome = new Income1();
   private Budgets Rent = new Budgets();
   private Budgets Entertainment = new Budgets();

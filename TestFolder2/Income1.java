@@ -20,6 +20,10 @@ class Income1 {
     this.amount = (amount > 0) ? (amount) : 0;
   }
 
+  public void addAmount(double amount) {
+    this.amount += (amount >= 0) ? amount : 0;
+  }
+
   public void inputIncome() {
     Scanner reader = new Scanner(System.in);
     int temp = 0;

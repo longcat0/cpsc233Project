@@ -28,7 +28,7 @@ public class Main extends Application {
     ListView<String> accountNames;
     Stage window;
     Scene scene1, scene2, scene3, scene4, userSwitch, income;
-    ListView<String> listView;
+    ListView<String> listView, incomeAccounts;
     String currentAccount;
 
   public static void main(String[] args) {
@@ -133,6 +133,10 @@ public class Main extends Application {
     This is the main menu of the application.
     It displays the all the available options to the user.
      */
+
+    incomeAccounts = new ListView<>();
+    GridPane.setConstraints(incomeAccounts, 4, 20);
+
     GridPane layout3 = new GridPane();
     layout3.setPadding(new Insets(20,20,20,20));
     layout3.setVgap(8);
@@ -153,9 +157,6 @@ public class Main extends Application {
     GridPane.setConstraints(menuButtons, 4, 30);
 
     Button addIncome = new Button("Add Income");
-    addIncome.setOnAction(op -> {
-      window.setScene(income);
-    });
 
     Button showExpense = new Button("Display transactions");
 
@@ -294,7 +295,24 @@ public class Main extends Application {
     incomeLayout.setVgap(8);
     incomeLayout.setHgap(10);
 
-    incomeLayout.getChildren().addAll();
+    Text currentIncomeAmount = new Text("Current Income: ");
+    currentIncomeAmount.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+    GridPane.setConstraints(currentIncomeAmount, 4, 15);
+
+    HBox incomeButtons = new HBox();
+    incomeButtons.setSpacing(10);
+    GridPane.setConstraints(incomeButtons, 4, 25);
+
+    TextField incomeInput2 = new TextField();
+    incomeInput2.setPromptText("Enter income");
+
+    Button incomeAdd = new Button("Add Income");
+    Button returnToMenu = new Button("Back");
+    returnToMenu.setOnAction(back -> window.setScene(scene3));
+
+    incomeButtons.getChildren().addAll(incomeInput2, incomeAdd, returnToMenu);
+
+
 
 
 
@@ -308,6 +326,7 @@ public class Main extends Application {
       double temp = Double.parseDouble(incomeInput.getText());
       userAccounts.get(nameInput.getText()).getUnallocatedFunds().setBudgAmount(temp);
       currentAccount = nameInput.getText();
+      incomeAccounts.getItems().add(nameInput.getText());
       userName.setText("Current User: " + currentAccount);
 
       rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
@@ -335,6 +354,10 @@ public class Main extends Application {
 
     });
 
+    /*
+    Upon clicking this button, it will allocate the amount of funds that the user inputs into the text field
+    towards the budget that is selected in the list view.
+    */
 
     button2.setOnAction(a -> {
       System.out.print(currentAccount);
@@ -418,6 +441,18 @@ public class Main extends Application {
     });
 
 
+    // This button changes the scene to the one that allows users to input any additional income to their accounts.
+    addIncome.setOnAction(op -> {
+      currentIncomeAmount.setText("Current Income: " + userAccounts.get(currentAccount).getIncome().getAmount());
+      window.setScene(income);
+    });
+
+    incomeAdd.setOnAction(add -> {
+      
+    });
+
+
+
 
 
     layout1.getChildren().addAll(titleLabel, incomeLabel, incomeInput, nameLabel, nameInput, button1);
@@ -429,6 +464,8 @@ public class Main extends Application {
     layout4.getChildren().addAll(options, horizontalButtons, budgetText, returnM);
 
     switchLayout.getChildren().addAll(blank, switchButtons, accountNames);
+
+    incomeLayout.getChildren().addAll(incomeAccounts, incomeButtons, currentIncomeAmount);
 
     scene1 = new Scene(layout1, 650, 700);
     scene2 = new Scene(layout2, 650, 700);
