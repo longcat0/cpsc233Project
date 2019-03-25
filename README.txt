@@ -40,4 +40,9 @@
   - Expense
   - Income1
 
+> When testing the files, make sure you have unit-4.12.jar and hamcrest-core-1.3.jar in the same folder as the JUnit Tests.
+1. Change the directory to a folder called TestFiles using the 'cd [folder name]' command
+2. Run the command: javac -cp .:junit-4.12.jar:hamcrest-core-1.3.jar *.java
+3. Run this command along with the file you want to test: java -cp .:junit-4.12.jar:hamcrest-core-1.3.jar org.junit.runner.JUnitCore <test class>
+
 
