@@ -34,5 +34,10 @@
 > NullPointerExceptions
 > Accounts in transaction list is not displayed.
 
+**JUnitTest**
+> There are three main tests
+  - Budgets
+  - Expense
+  - Income1
 
 
