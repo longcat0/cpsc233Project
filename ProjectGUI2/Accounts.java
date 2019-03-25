@@ -118,7 +118,7 @@ class Accounts implements Serializable {
    * @param  availFunds Budget amount
    * @return           false if expense exceeds budget, true otherwise
    */
-  public boolean checkBudg(double amount, double availFunds) {
+  public boolean checkBudg(String name, double amount, double availFunds) {
     if ((amount < 0) || ((availFunds - amount) < 0)) {
       return false;
     } else {
