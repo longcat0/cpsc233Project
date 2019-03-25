@@ -13,10 +13,18 @@
 5. Type 'java Main' to run the program. 
 
 **Program Instructions**
-- Do not begin the program by clicking on "Continue" as it will cause issues for the program. The "Continue" button is meant for scenarios
-  where the user is loading previously saved data (Previously saved accounts).
+- Clicking the "Continue" button will load all the previously saved accounts.
 - Begin by creating an account with a name and amount of income. 
 - In the main menu, the user is presented with various options to manipulate their account.
+- In order to exit the program, the user can click on the exit button in the top right corner of the window. This will save the             current states of all the accounts.
+
+**Features**
+- Creation of multiple accounts
+- Each account contains seven default budgets
+- Transferring funds between budgets
+- Adding an expense towards a budget. That expense will be saved to a transactions list
+- Users have the option to add any additional incomes to their accounts, which they can allocate towards their current budgets
+
 
 
 **Issues (To be addressed)**
