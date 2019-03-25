@@ -97,29 +97,28 @@ class Accounts implements Serializable {
   }
 */
   /**
-   * [getIncome description]
-   * @return [description]
+   * Returns user Income
+   * @return userIncome
    */
   public Income1 getIncome() {
     return userIncome;
   }
 
   /**
-   * [getName description]
-   * @return [description]
+   * Returns user Name
+   * @return name
    */
   public String getName() {
     return this.name;
   }
 
   /**
-   * [checkBudg description]
-   * @param  name       [description]
-   * @param  amount     [description]
-   * @param  availFunds [description]
-   * @return            [description]
+   * When the user inputs an expense, this method will check if the budget has a sufficient amount of funds
+   * @param  amount     Expense amount
+   * @param  availFunds Budget amount
+   * @return           false if expense exceeds budget, true otherwise
    */
-  public boolean checkBudg(String name, double amount, double availFunds) {
+  public boolean checkBudg(double amount, double availFunds) {
     if ((amount < 0) || ((availFunds - amount) < 0)) {
       return false;
     } else {
@@ -128,10 +127,10 @@ class Accounts implements Serializable {
   }
 
   /**
-   * [checkExpense description]
-   * @param  budgName [description]
-   * @param  amount   [description]
-   * @return          [description]
+   * Takes in two amounts and compares if one is bigger than the other.
+   * @param  someAmount A double value
+   * @param  amount   A double value
+   * @return          true if someAmount is greater than amount, false otherwise
    */
   public boolean checkExpense(double someAmount, double amount) {
     if ((someAmount - amount ) >= 0) {
