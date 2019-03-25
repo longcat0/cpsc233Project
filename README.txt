@@ -40,4 +40,7 @@
   - Expense
   - Income1
 
+> When testing the files, make sure you have unit-4.12.jar and hamcrest-core-1.3.jar in the same folder as the JUnit Tests.
+1. Change the directory usi
+
 
