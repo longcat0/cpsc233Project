@@ -1,0 +1,18 @@
+javac -cp .;junit-4.12.jar;hamcrest-core-1.3.jar *.java
+
+java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore GuessingGame
+
+
+cd <Directory Name> - Change directory.
+cd ~ - Go to Home directory.
+cd ..  - Go to parent directory.
+ls - List directory content.
+mkdir <Directory Name> - Make directory.
+rm <File Name> - Delete file. (Warning! Can’t recover file).
+cat <File Name> - Print file to the terminal.
+clear - Clear the screen.
+pwd - Print working directory address.
+
+
+031-9955-5678
+204-524 1A ave E brooks
