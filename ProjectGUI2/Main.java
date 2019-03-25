@@ -65,7 +65,7 @@ public class Main extends Application {
     primaryStage.setTitle("Virtual Piggy Bank");
     window = primaryStage;
 
-    
+
 
     System.out.println("running...");
 
@@ -75,11 +75,11 @@ public class Main extends Application {
     layoutPre.setHgap(10);
     BackgroundImage myBIpre= new BackgroundImage(new Image("bwp2.png",950,900,false,true),BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
     layoutPre.setBackground(new Background(myBIpre));
-    Button newUser = new Button("Create New Account");  
+    Button newUser = new Button("Create New Account");
     newUser.setTextFill(Color.YELLOW);
     newUser.setStyle("-fx-font: 22 arial; -fx-background-color: Black");
 
-    Button continueNewButton = new Button("Continue");   
+    Button continueNewButton = new Button("Continue");
     continueNewButton.setTextFill(Color.YELLOW);
     continueNewButton.setStyle("-fx-font: 22 arial; -fx-background-color: Black");
 
@@ -558,7 +558,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
            expenses.add(new Expense("Rent", expenseAmount, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount - rentAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount - rentAmount);
+               userAccounts.get(currentAccount).getRent().setBudgAmount(0);
+               expenses.add(new Expense("Rent", expenseAmount, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+             }
+           }
          }
        } else if (budgetSelection.equals("Food")) {
          double expenseAmount2 = Double.parseDouble(expenseInput.getText());
@@ -569,7 +577,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
            expenses.add(new Expense("Food", expenseAmount2, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount2 - foodAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount2 - foodAmount);
+               userAccounts.get(currentAccount).getFood().setBudgAmount(0);
+               expenses.add(new Expense("Food", expenseAmount2, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+             }
+           }
          }
 
        } else if (budgetSelection.equals("Bills")) {
@@ -581,7 +597,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
            expenses.add(new Expense("Bills", expenseAmount3, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount3 - billsAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount3 - billsAmount);
+               userAccounts.get(currentAccount).getBills().setBudgAmount(0);
+               expenses.add(new Expense("Bills", expenseAmount3, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+             }
+           }
          }
 
        } else if (budgetSelection.equals("Entertainment")) {
@@ -593,7 +617,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
            expenses.add(new Expense("Entertainment", expenseAmount4, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount4 - entertainmentAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount4 - entertainmentAmount);
+               userAccounts.get(currentAccount).getEntertainment().setBudgAmount(0);
+               expenses.add(new Expense("Entertainment", expenseAmount4, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+             }
+           }
          }
 
        } else if (budgetSelection.equals("Clothing")) {
@@ -605,7 +637,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
            expenses.add(new Expense("Clothing", expenseAmount5, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount5 - clothingAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount5 - clothingAmount);
+               userAccounts.get(currentAccount).getClothing().setBudgAmount(0);
+               expenses.add(new Expense("Clothing", expenseAmount5, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+             }
+           }
          }
        } else if (budgetSelection.equals("Insurance")) {
          double expenseAmount6 = Double.parseDouble(expenseInput.getText());
@@ -616,7 +656,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
            expenses.add(new Expense("Insurance", expenseAmount6, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount6 - insuranceAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount6 - insuranceAmount);
+               userAccounts.get(currentAccount).getInsurance().setBudgAmount(0);
+               expenses.add(new Expense("Insurance", expenseAmount6, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+             }
+           }
          }
        } else if (budgetSelection.equals("Extras")) {
          double expenseAmount7 = Double.parseDouble(expenseInput.getText());
@@ -627,7 +675,15 @@ public void handle(MouseEvent mouseEvent)
            Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
            expenses.add(new Expense("Extras", expenseAmount7, currentAccount));
          } else {
-           Confirmation.display("Alert");
+           if (Confirmation.display("Alert")) {
+             if ((expenseAmount7 - extrasAmount) <= userAccounts.get(currentAccount).getIncome().getAmount()) {
+               initial.setText("Previous Budget Amount: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+               userAccounts.get(currentAccount).getIncome().removeAmount(expenseAmount7 - extrasAmount);
+               userAccounts.get(currentAccount).getExtras().setBudgAmount(0);
+               expenses.add(new Expense("Extras", expenseAmount7, currentAccount));
+               Final.setText("New Budget Amount: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+             }
+           }
          }
        }
 
@@ -969,7 +1025,7 @@ public void handle(MouseEvent mouseEvent)
 
     window.show();
     primaryStage.setScene(scenepre);
-    primaryStage.show();    
+    primaryStage.show();
 
 
   }

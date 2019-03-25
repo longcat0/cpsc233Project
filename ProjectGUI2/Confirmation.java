@@ -10,7 +10,7 @@ public class Confirmation {
 
   static boolean answer;
 
-  public static void display(String title) {
+  public static boolean display(String title) {
     Stage window = new Stage();
     window.initModality(Modality.APPLICATION_MODAL);
     window.setTitle(title);
@@ -19,7 +19,15 @@ public class Confirmation {
     Label windowMessage = new Label("This amount exceeds your budget.\nWould you like to remove from your available funds?");
 
     Button yes = new Button("Yes");
+    yes.setOnAction(y -> {
+      answer = true;
+      window.close();
+    });
     Button no = new Button("No");
+    no.setOnAction(n -> {
+      answer = false;
+      window.close();
+    });
 
     VBox yolo = new VBox();
     yolo.setSpacing(10);
@@ -32,10 +40,11 @@ public class Confirmation {
     buttons.getChildren().addAll(yes, no);
     yolo.getChildren().addAll(windowMessage, buttons);
 
-    Scene scene = new Scene(yolo, 300, 200);
+    Scene scene = new Scene(yolo, 500, 200);
     window.setScene(scene);
     window.showAndWait();
 
+    return answer;
 
   }
 }
