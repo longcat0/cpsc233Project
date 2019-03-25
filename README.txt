@@ -24,6 +24,7 @@
 > Clicking "Continue" when there are no accounts saved in the binary file.
 > Adding more visual indicators to notify the user about invalid inputs, illegal actions, etc.
 > NullPointerExceptions
+> Accounts in transaction list is not displayed.
 
 
 
