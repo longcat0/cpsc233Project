@@ -28,11 +28,8 @@
 
 
 **Issues (To be addressed)**
-> Users are able to put input String into text fields where a double is supposed to be taken.
-> Clicking "Continue" when there are no accounts saved in the binary file.
-> Adding more visual indicators to notify the user about invalid inputs, illegal actions, etc.
-> NullPointerExceptions
-> Accounts in transaction list is not displayed.
+> Inconsistent Visual layouts 
+
 
 **JUnitTest**
 > There are three main tests
