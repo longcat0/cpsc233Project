@@ -61,6 +61,9 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
 
     String fileName = "accounts.bin";
+    String fileName2 = "transactions.bin";
+
+
 
     primaryStage.setTitle("Virtual Piggy Bank");
     window = primaryStage;
@@ -79,7 +82,7 @@ public class Main extends Application {
     newUser.setTextFill(Color.YELLOW);
     newUser.setStyle("-fx-font: 22 arial; -fx-background-color: Black");
 
-    Button continueNewButton = new Button("Continue");
+    Button continueNewButton = new Button("Load Saved Accounts");
     continueNewButton.setTextFill(Color.YELLOW);
     continueNewButton.setStyle("-fx-font: 22 arial; -fx-background-color: Black");
 
@@ -144,8 +147,10 @@ public void handle(MouseEvent mouseEvent)
 	{
 		public void handle(ActionEvent event)
 		{
-			primaryStage.setScene(scene1);
-			primaryStage.show();
+      if (Confirmation2.display("Confirmation")) {
+        primaryStage.setScene(scene1);
+        primaryStage.show();
+      }
 
 		}});
 
@@ -424,11 +429,20 @@ public void handle(MouseEvent mouseEvent)
     Button switchAccounts = new Button("Switch");
     switchAccounts.setStyle("-fx-background-color: MediumSeaGreen");
     switchAccounts.setOnAction(ty -> {
-      currentAccount = accountNames.getSelectionModel().getSelectedItem();
-      userName.setText("Current User: " + currentAccount);
-      //userName.setTextFill(Color.WHITE);
+      try {
+        String backup = currentAccount;
+        currentAccount = accountNames.getSelectionModel().getSelectedItem();
+        if (currentAccount == null) {
+          currentAccount = backup;
+          throw new NullPointerException("No account selected");
+        }
+        userName.setText("Current User: " + currentAccount);
+        //userName.setTextFill(Color.WHITE);
 
-      window.setScene(scene3);
+        window.setScene(scene3);
+      } catch (NullPointerException nu) {
+        System.out.println(nu);
+      }
     });
 
     switchButtons.getChildren().addAll(cancel, switchAccounts);
@@ -547,6 +561,9 @@ public void handle(MouseEvent mouseEvent)
      stuff.getChildren().addAll(budgets, initial, Final);
 
      addingExpense.setOnAction(hi -> {
+
+       try {
+
        double expenseAmount = Double.parseDouble(expenseInput.getText());
        String budgetSelection = budgets.getSelectionModel().getSelectedItem();
 
@@ -686,6 +703,9 @@ public void handle(MouseEvent mouseEvent)
            }
          }
        }
+     } catch (Exception hello) {
+       System.out.println(hello);
+     }
 
     });
 
@@ -693,14 +713,15 @@ public void handle(MouseEvent mouseEvent)
     Recent Transactions layout
      */
 
+
     // BudgetName column
     TableColumn nameColumn = new TableColumn("Budget");
-    nameColumn.setMinWidth(100);
+    nameColumn.setMinWidth(300);
     nameColumn.setCellValueFactory(new PropertyValueFactory<Expense, String>("budgetName"));
 
     // Amount column
     TableColumn amountColumn = new TableColumn("Amount");
-    amountColumn.setMinWidth(100);
+    amountColumn.setMinWidth(250);
     amountColumn.setCellValueFactory(new PropertyValueFactory<Expense, String>("amount"));
 
     // BudgetName column
@@ -708,13 +729,8 @@ public void handle(MouseEvent mouseEvent)
     timeColumn.setMinWidth(200);
     timeColumn.setCellValueFactory(new PropertyValueFactory<Expense, String>("time"));
 
-    // Account name column
-    TableColumn accountColumn = new TableColumn("Account");
-    accountColumn.setMinWidth(200);
-    accountColumn.setCellValueFactory(new PropertyValueFactory<Expense, String>("currentAccount"));
-
     expenseTable = new TableView<>();
-    expenseTable.getColumns().addAll(accountColumn, nameColumn, amountColumn, timeColumn);
+    expenseTable.getColumns().addAll(nameColumn, amountColumn, timeColumn);
 
     Button returnBack = new Button("Return to Main Menu");
     returnBack.setOnAction(bac -> {
@@ -785,107 +801,110 @@ public void handle(MouseEvent mouseEvent)
     Once an Account object is created, it will be put inside of a HashMap which essentially stores all created accounts.
      */
     button1.setOnAction(e -> {
-      userAccounts.put(nameInput.getText(), new Accounts(nameInput.getText(), Double.parseDouble(incomeInput.getText())));
-      accountNames.getItems().add(nameInput.getText());
-      double temp = Double.parseDouble(incomeInput.getText());
-      userAccounts.get(nameInput.getText()).getUnallocatedFunds().setBudgAmount(temp);
-      currentAccount = nameInput.getText();
-      incomeAccounts.getItems().add(nameInput.getText());
-      userName.setText("Current User: " + currentAccount);
-      //userName.setTextFill(Color.WHITE);
-
-
-      window.setScene(scene3);
-      for(String names : userAccounts.keySet()) {
-        System.out.println(names);
+      try {
+        userAccounts.put(nameInput.getText(), new Accounts(nameInput.getText(), Double.parseDouble(incomeInput.getText())));
+        accountNames.getItems().add(nameInput.getText());
+        double temp = Double.parseDouble(incomeInput.getText());
+        userAccounts.get(nameInput.getText()).getUnallocatedFunds().setBudgAmount(temp);
+        currentAccount = nameInput.getText();
+        incomeAccounts.getItems().add(nameInput.getText());
+        window.setScene(scene3);
+        userName.setText("Current User: " + currentAccount);
+        for (String key : userAccounts.keySet()) {
+          System.out.println(userAccounts.get(key).getName());
+        }
+      } catch (NumberFormatException ex) {
+        System.out.println(ex);
       }
-
+      //userName.setTextFill(Color.WHITE)
 
     });
 
 
     button2.setOnAction(a -> {
-      System.out.print(currentAccount);
-      String selection = listView.getSelectionModel().getSelectedItem();
-      double allocationAmount = Double.parseDouble(budgetInput.getText());
-      double currentBalance = userAccounts.get(currentAccount).getIncome().getAmount();
-      System.out.println(selection);
-      System.out.println(allocationAmount);
 
-      if (userAccounts.get(currentAccount).checkBudg(selection, allocationAmount, currentBalance)) {
+      try {
 
-        error.setFill(Color.WHITESMOKE);
-        window.setScene(scene2);
+        String selection = listView.getSelectionModel().getSelectedItem();
+        double allocationAmount = Double.parseDouble(budgetInput.getText());
+        double currentBalance = userAccounts.get(currentAccount).getIncome().getAmount();
 
-        if (selection.equals("Rent")) {
-          userAccounts.get(currentAccount).getRent().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
-          rentBudg1.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+        if (userAccounts.get(currentAccount).checkBudg(selection, allocationAmount, currentBalance)) {
+
+          error.setFill(Color.WHITESMOKE);
+          window.setScene(scene2);
+
+          if (selection.equals("Rent")) {
+            userAccounts.get(currentAccount).getRent().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            rentBudg.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+            rentBudg1.setText("Your current rent budget: " + userAccounts.get(currentAccount).getRent().getBudgAmount());
+          }
+
+          if (selection.equals("Entertainment")) {
+            userAccounts.get(currentAccount).getEntertainment().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            entertainmentBudg.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+            entertainmentBudg1.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
+          }
+
+
+          if (selection.equals("Clothing")) {
+            userAccounts.get(currentAccount).getClothing().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            clothingBudg.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+            clothingBudg1.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
+          }
+
+
+          if (selection.equals("Bills")) {
+            userAccounts.get(currentAccount).getBills().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            billsBudg.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+            billsBudg1.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
+          }
+
+          if (selection.equals("Food")) {
+            userAccounts.get(currentAccount).getFood().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            foodBudg.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+            foodBudg1.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
+          }
+
+          if (selection.equals("Extras")) {
+            userAccounts.get(currentAccount).getExtras().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            extrasBudg.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+            extrasBudg1.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
+          }
+
+          if (selection.equals("Insurance")) {
+            userAccounts.get(currentAccount).getInsurance().addToBudg(allocationAmount);
+            userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
+            insuranceBudg.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+            insuranceBudg1.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
+
+          }
+          availIncome.setText("Your current available funds: " + Math.round(userAccounts.get(currentAccount).getIncome().getAmount() * 100) / 100.0);
+
+
+          System.out.println(currentBalance);
+
+
+        } else {
+
+          error.setFill(Color.RED);
+          window.setScene(scene2);
         }
 
-        if (selection.equals("Entertainment")) {
-          userAccounts.get(currentAccount).getEntertainment().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          entertainmentBudg.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
-          entertainmentBudg1.setText("Your current entertainment budget: " + userAccounts.get(currentAccount).getEntertainment().getBudgAmount());
-        }
-
-
-        if (selection.equals("Clothing")) {
-          userAccounts.get(currentAccount).getClothing().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          clothingBudg.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
-          clothingBudg1.setText("Your current clothing budget: " + userAccounts.get(currentAccount).getClothing().getBudgAmount());
-        }
-
-
-        if (selection.equals("Bills")) {
-          userAccounts.get(currentAccount).getBills().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          billsBudg.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
-          billsBudg1.setText("Your current bills budget: " + userAccounts.get(currentAccount).getBills().getBudgAmount());
-        }
-
-        if (selection.equals("Food")) {
-          userAccounts.get(currentAccount).getFood().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          foodBudg.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
-          foodBudg1.setText("Your current food budget: " + userAccounts.get(currentAccount).getFood().getBudgAmount());
-        }
-
-        if (selection.equals("Extras")) {
-          userAccounts.get(currentAccount).getExtras().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          extrasBudg.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
-          extrasBudg1.setText("Your current budget for extras: " + userAccounts.get(currentAccount).getExtras().getBudgAmount());
-        }
-
-        if (selection.equals("Insurance")) {
-          userAccounts.get(currentAccount).getInsurance().addToBudg(allocationAmount);
-          userAccounts.get(currentAccount).getIncome().removeAmount(allocationAmount);
-          insuranceBudg.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
-          insuranceBudg1.setText("Your current insurance budget: " + userAccounts.get(currentAccount).getInsurance().getBudgAmount());
-
-        }
-        availIncome.setText("Your current available funds: " + Math.round(userAccounts.get(currentAccount).getIncome().getAmount() * 100) / 100.0);
-
-
-        System.out.println(currentBalance);
-
-
-      } else {
-
-        error.setFill(Color.RED);
-        window.setScene(scene2);
+      } catch (Exception hi) {
+        System.out.println(hi);
       }
 
-      System.out.println(listView.getSelectionModel().getSelectedItem());
-      System.out.println(userAccounts.get(currentAccount).getRent().getBudgAmount());
+
     });
 
     showExpense.setOnAction(ex -> {
-      System.out.println(expenses);
       expenseTable.setItems(expenses);
       window.setScene(transactions);
     });
@@ -903,6 +922,7 @@ public void handle(MouseEvent mouseEvent)
           {
 
             boolean cont = true;
+            boolean cont2 = true;
 
             try {
               ObjectInputStream is = new ObjectInputStream(new FileInputStream(fileName));
@@ -917,8 +937,25 @@ public void handle(MouseEvent mouseEvent)
               }
 
               is.close();
+
             } catch(Exception f) {
-              System.out.println(f);
+
+            }
+
+            try {
+              ObjectInputStream is2 = new ObjectInputStream(new FileInputStream(fileName2));
+              while (cont2) {
+                Expense anExpense = (Expense) is2.readObject();
+                if (anExpense != null) {
+                  expenses.add(anExpense);
+                } else {
+                  cont2 = false;
+                }
+              }
+
+              is2.close();
+            } catch(Exception fg) {
+
             }
 
             for (String key : userAccounts.keySet()) {
@@ -931,7 +968,12 @@ public void handle(MouseEvent mouseEvent)
 
             layout1.getChildren().remove(continueNewButton);
 
-            window.setScene(scene3);
+            if (userAccounts.isEmpty()) {
+              Confirmation3.display("Alert");
+
+            } else {
+              window.setScene(scene3);
+            }
 
           }});
 
@@ -957,7 +999,7 @@ public void handle(MouseEvent mouseEvent)
         Double incomeAmount = Double.parseDouble(incomeInput2.getText());
         userAccounts.get(incomeAccounts.getSelectionModel().getSelectedItem()).getIncome().addAmount(incomeAmount);
         currentIncomeAmount.setText("Current Income for " + incomeAccounts.getSelectionModel().getSelectedItem() + ": " +  userAccounts.get(incomeAccounts.getSelectionModel().getSelectedItem()).getIncome().getAmount());
-        errorMessage.setFill(Color.WHITESMOKE);
+        errorMessage.setFill(Color.WHITE);
       } catch(Exception e) {
         errorMessage.setFill(Color.RED);
       }
@@ -971,18 +1013,20 @@ public void handle(MouseEvent mouseEvent)
     });
 
     transferButton.setOnAction(trans ->{
-      String recipient = transferBudget2.getSelectionModel().getSelectedItem();
-      String sender = transferBudget1.getSelectionModel().getSelectedItem();
-      double transferTotal = Double.parseDouble(transferAmount.getText());
-      System.out.println(userAccounts.get(currentAccount).returnAllBudgets(sender).getBudgAmount());
-        System.out.println(userAccounts.get(currentAccount).returnAllBudgets(recipient).getBudgAmount());
+      try {
+        String recipient = transferBudget2.getSelectionModel().getSelectedItem();
+        String sender = transferBudget1.getSelectionModel().getSelectedItem();
+        double transferTotal = Double.parseDouble(transferAmount.getText());
 
 
-      userAccounts.get(currentAccount).returnAllBudgets(sender).transferToBudget(userAccounts.get(currentAccount).returnAllBudgets(recipient), transferTotal);
-      transferBudgAmount1.setText("Current Balance for Sender: " + userAccounts.get(currentAccount).returnAllBudgets(sender).getBudgAmount());
-      transferBudgAmount1.setTextFill(Color.WHITE);
-      transferBudgAmount2.setText("Current Balance for Recipient: " + userAccounts.get(currentAccount).returnAllBudgets(recipient).getBudgAmount());
-      transferBudgAmount2.setTextFill(Color.WHITE);
+        userAccounts.get(currentAccount).returnAllBudgets(sender).transferToBudget(userAccounts.get(currentAccount).returnAllBudgets(recipient), transferTotal);
+        transferBudgAmount1.setText("Current Balance for Sender: " + userAccounts.get(currentAccount).returnAllBudgets(sender).getBudgAmount());
+        transferBudgAmount1.setTextFill(Color.WHITE);
+        transferBudgAmount2.setText("Current Balance for Recipient: " + userAccounts.get(currentAccount).returnAllBudgets(recipient).getBudgAmount());
+        transferBudgAmount2.setTextFill(Color.WHITE);
+      } catch (Exception exc) {
+        System.out.println(exc);
+      }
 
     });
 
@@ -1005,19 +1049,19 @@ public void handle(MouseEvent mouseEvent)
 
     transferLayout.getChildren().addAll(transferButtons, transferBudget1, transferBudget2, transferBudgAmount1, transferBudgAmount2);
 
-    scene1 = new Scene(layout1, 650, 700);
-    scene2 = new Scene(layout2, 650, 700);
-    scene3 = new Scene(layout3, 650, 700);
-    scene4 = new Scene(layout4, 650, 700);
-    userSwitch = new Scene(switchLayout, 650, 700);
-    income = new Scene(incomeLayout, 650, 700);
-    expense = new Scene(expenseLayout, 650, 700);
+    scene1 = new Scene(layout1, 800, 700);
+    scene2 = new Scene(layout2, 800, 700);
+    scene3 = new Scene(layout3, 800, 700);
+    scene4 = new Scene(layout4, 800, 700);
+    userSwitch = new Scene(switchLayout, 800, 700);
+    income = new Scene(incomeLayout, 800, 700);
+    expense = new Scene(expenseLayout, 800, 700);
 
-    transactions = new Scene(transactionLayout, 650, 700);
+    transactions = new Scene(transactionLayout, 800, 700);
     BackgroundImage myBI8= new BackgroundImage(new Image("transac.png",630,550,false,true),BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
     transactionLayout.setBackground(new Background(myBI8));
 
-    transferScene = new Scene(transferLayout, 650, 700);
+    transferScene = new Scene(transferLayout, 800, 700);
     BackgroundImage myBI9= new BackgroundImage(new Image("bw2.png",630,550,false,true),BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT);
     transferLayout.setBackground(new Background(myBI9));
 
@@ -1038,12 +1082,25 @@ public void handle(MouseEvent mouseEvent)
         os.writeObject(userAccounts.get(key));
       }
       os.close();
+
     } catch (FileNotFoundException e) {
 
     } catch(IOException e) {
 
     }
 
+    try {
+      String fileName2 = "transactions.bin";
+      ObjectOutputStream os2 = new ObjectOutputStream(new FileOutputStream(fileName2));
+      for (Expense key2 : expenses) {
+        os2.writeObject(key2);
+      }
+      os2.close();
+    } catch (FileNotFoundException ef) {
+
+    } catch(IOException ef) {
+
+    }
     System.out.println("Saving accounts...");
 
 /*}});*/

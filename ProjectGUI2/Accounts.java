@@ -1,8 +1,7 @@
 import java.util.*;
 import java.io.Serializable;
 
-class Accounts implements Serializable {
-  private String name = "Untitled";
+class Accounts extends Person implements Serializable {
   private Income1 userIncome = new Income1();
   private Budgets Rent = new Budgets();
   private Budgets Entertainment = new Budgets();
@@ -13,6 +12,9 @@ class Accounts implements Serializable {
   private Budgets Extras = new Budgets();
   private Budgets UnallocatedFunds = new Budgets();
 
+  private static final long serialVersionUID = -8050658235857325594L;
+
+
 
 
   /**
@@ -20,8 +22,8 @@ class Accounts implements Serializable {
    * @param name   Assigns it to the instance variable Name
    * @param Income Will take the parameter and set the account's income
    */
-  public Accounts(String name, double Income) {
-    this.name = name;
+  public Accounts(String someName, double Income) {
+    super(someName);
     userIncome.setAmount(Income);
 
   }
@@ -109,7 +111,7 @@ class Accounts implements Serializable {
    * @return name
    */
   public String getName() {
-    return this.name;
+    return super.getName();
   }
 
   /**

@@ -1,22 +1,25 @@
 import java.util.*;
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-public class Expense {
+public class Expense implements Serializable {
+  private String currentAccount = "Untitled"; // The account that the expense relates to
   private String budgetName;
   private double amount;
   private String time;
-  private String currentAccount; // The account that the expense relates to
   private Budgets b;
-  
 
-  public Expense(String budgetName, double amount, String currentAccount) {
-	b = new Budgets(budgetName, amount);
+  private static final long serialVersionUID = -8050658235857325594L;
+
+
+  public Expense(String budgetName, double amount, String account) {
+	  b = new Budgets(budgetName, amount);
     Date datto = new Date();
-    this.budgetName = budgetName;
+    this.budgetName = budgetName + " (" + account + ")";
     setAmount(amount);
     this.time = datto.toString();
-    this.currentAccount = currentAccount;
+    this.currentAccount = account;
   }
 
   public String getBudgetName() {
@@ -32,7 +35,7 @@ public class Expense {
 	  {
 		  this.amount = this.amount;
 	  }
-	  else 
+	  else
 	  {
 		  this.amount = amount;
 	  }
