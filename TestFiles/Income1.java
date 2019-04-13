@@ -4,6 +4,7 @@ import java.io.Serializable;
 class Income1 implements Serializable {
 
   private double amount = 0.0;
+  private static final long serialVersionUID = -8050658235857325594L;
 
   public Income1() {
 

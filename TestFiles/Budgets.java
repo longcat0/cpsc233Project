@@ -5,6 +5,7 @@ class Budgets implements Serializable {
 
 	private String name;
 	private double amount = 0.0;
+	private static final long serialVersionUID = -8050658235857325594L;
 
 	public Budgets() {
 
