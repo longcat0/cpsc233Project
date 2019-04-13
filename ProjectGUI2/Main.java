@@ -440,6 +440,7 @@ public void handle(MouseEvent mouseEvent)
         //userName.setTextFill(Color.WHITE);
 
         window.setScene(scene3);
+        System.out.println(currentAccount);
       } catch (NullPointerException nu) {
         System.out.println(nu);
       }
@@ -810,9 +811,11 @@ public void handle(MouseEvent mouseEvent)
         incomeAccounts.getItems().add(nameInput.getText());
         window.setScene(scene3);
         userName.setText("Current User: " + currentAccount);
+        System.out.println("All Accounts:");
         for (String key : userAccounts.keySet()) {
           System.out.println(userAccounts.get(key).getName());
         }
+
       } catch (NumberFormatException ex) {
         System.out.println(ex);
       }
@@ -829,7 +832,11 @@ public void handle(MouseEvent mouseEvent)
         double allocationAmount = Double.parseDouble(budgetInput.getText());
         double currentBalance = userAccounts.get(currentAccount).getIncome().getAmount();
 
-        if (userAccounts.get(currentAccount).checkBudg(selection, allocationAmount, currentBalance)) {
+        System.out.println("Budget " + selection);
+        System.out.println("User Income " + currentBalance);
+        System.out.println("Allocation " + allocationAmount);
+
+          if (userAccounts.get(currentAccount).checkBudg(selection, allocationAmount, currentBalance)) {
 
           error.setFill(Color.WHITESMOKE);
           window.setScene(scene2);
@@ -888,7 +895,7 @@ public void handle(MouseEvent mouseEvent)
           availIncome.setText("Your current available funds: " + Math.round(userAccounts.get(currentAccount).getIncome().getAmount() * 100) / 100.0);
 
 
-          System.out.println(currentBalance);
+    
 
 
         } else {
@@ -905,6 +912,7 @@ public void handle(MouseEvent mouseEvent)
     });
 
     showExpense.setOnAction(ex -> {
+      System.out.println(expenses);
       expenseTable.setItems(expenses);
       window.setScene(transactions);
     });
@@ -997,6 +1005,7 @@ public void handle(MouseEvent mouseEvent)
     incomeAdd.setOnAction(add -> {
       try {
         Double incomeAmount = Double.parseDouble(incomeInput2.getText());
+        System.out.println("Amount added " + incomeAmount);
         userAccounts.get(incomeAccounts.getSelectionModel().getSelectedItem()).getIncome().addAmount(incomeAmount);
         currentIncomeAmount.setText("Current Income for " + incomeAccounts.getSelectionModel().getSelectedItem() + ": " +  userAccounts.get(incomeAccounts.getSelectionModel().getSelectedItem()).getIncome().getAmount());
         errorMessage.setFill(Color.WHITE);
@@ -1017,6 +1026,10 @@ public void handle(MouseEvent mouseEvent)
         String recipient = transferBudget2.getSelectionModel().getSelectedItem();
         String sender = transferBudget1.getSelectionModel().getSelectedItem();
         double transferTotal = Double.parseDouble(transferAmount.getText());
+
+        System.out.println("From " + recipient);
+        System.out.println("To " + sender);
+        System.out.println("Amount " + transferTotal);
 
 
         userAccounts.get(currentAccount).returnAllBudgets(sender).transferToBudget(userAccounts.get(currentAccount).returnAllBudgets(recipient), transferTotal);
@@ -1100,6 +1113,9 @@ public void handle(MouseEvent mouseEvent)
 
     } catch(IOException ef) {
 
+    }
+    for (String key3 : userAccounts.keySet()) {
+      System.out.println(key3);
     }
     System.out.println("Saving accounts...");
 
